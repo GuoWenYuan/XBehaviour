@@ -1,4 +1,5 @@
 Unity BehaviourTree + Editor Node + Custom Data
 Parse the data without using Reflection
 
-Using XNode Odin
+EditorNode from XNode,Odin
+BehaviourCode from NPBehavior
