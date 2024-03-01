@@ -241,19 +241,22 @@ namespace XBehaviour.Tool
 
         private string GetParserLine()
         {
-           //获取所有继承自IParser的类,并且注册到ParserCollection中
+            
+            //遍历Utils.GeneratedPath.RootPath路下所有后缀为Parser.cs的文件。
+            string[] files = Directory.GetFiles(Utils.GeneratedPath.RootPath, "*.cs", SearchOption.AllDirectories);
             StringBuilder parsers = new();
-            Type[] types = Assembly.GetTypes();
-            foreach (var type in types)
+            foreach (var file in files)
             {
-                if (type.IsClass && !type.IsAbstract && type.GetInterface("IParser") != null)
+                if (file.Contains("Parser.cs") && !file.Contains("IParser.cs"))
                 {
-                    string line = RegisterParserLine.Replace("节点名称", Utils.ToString(type.Name.Replace("Parser", "")));
-                    line = line.Replace("转换节点", type.Name);
+                    string className = Path.GetFileNameWithoutExtension(file);
+                    className = className.Replace("Parser", "");
+                    string line = RegisterParserLine.Replace("节点名称", Utils.ToString(className));
+                    line = line.Replace("转换节点", className + "Parser");
                     parsers.AppendLine(line);
-
                 }
             }
+          
             return parsers.ToString();
         }
     }

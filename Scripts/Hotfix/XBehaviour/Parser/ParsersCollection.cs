@@ -16,7 +16,12 @@ namespace XBehaviour.Runtime
         public static void Collection()
         {
             if (loaded) return;
-//注册数据
+			parsers.Add("Parallel",new ParallelParser());
+			parsers.Add("Root",new RootParser());
+			parsers.Add("Selector",new SelectorParser());
+			parsers.Add("Task",new TaskParser());
+			parsers.Add("Vector",new VectorParser());
+
             
             loaded = true;
         }

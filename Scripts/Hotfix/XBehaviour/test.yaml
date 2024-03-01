@@ -1,0 +1,85 @@
+RunningType: Begin
+className: Root
+Children:
+  - selectionState: SuccessOne
+    className: Selector
+    Children:
+      - value: 测试121241
+        vector: &o0
+          className: Vector3
+          x: 3
+          y: 5
+          z: 7
+          name: 基础任务节点诞生位置
+          hideFlags: None
+        className: Task
+        Children: []
+        name: 基础任务节点
+        hideFlags: None
+    name: 选择节点
+    hideFlags: None
+  - state: SuccessOne
+    returnStatue: FollowChild
+    className: Parallel
+    Children:
+      - id: 0
+        enabled: false
+        testEnums:
+          - ConditionEnum_IsTrue
+          - ConditionEnum_IsNotEqual
+          - ConditionEnum_IsTrue
+        temps:
+          - 星期一
+          - 星期日
+        values:
+          - 1.1
+          - 5.5
+          - 9.6
+          - 14.7
+        className: Condition
+        Children:
+          - value: 哈喽07990
+            vector:
+              className: Vector3
+              x: 1
+              y: 2
+              z: 3.3547
+              name: 基础任务节点10012
+              hideFlags: None
+            className: Task
+            Children: []
+            name: 基础任务节点
+            hideFlags: None
+        name: 条件
+        hideFlags: None
+    name: 并行节点
+    hideFlags: None
+  - state: Define
+    returnStatue: FollowChild
+    className: Parallel
+    Children:
+      - id: 0
+        enabled: false
+        testEnums:
+          - ConditionEnum_IsGreater
+          - ConditionEnum_IsLess
+        temps:
+          - 今天
+        values:
+          - 5.7
+          - 98
+          - 1237
+        className: Condition
+        Children:
+          - value: 温热12345
+            vector: *o0
+            className: Task
+            Children: []
+            name: 基础任务节点
+            hideFlags: None
+        name: 条件
+        hideFlags: None
+    name: 并行节点
+    hideFlags: None
+name: 基础根节点
+hideFlags: None
