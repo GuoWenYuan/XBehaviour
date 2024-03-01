@@ -1,0 +1,17 @@
+{
+    "name": "XBehaviour.Tool",
+    "rootNamespace": "",
+    "references": [
+        "GUID:596ae168cda9f0a47b228592e03bd72d",
+        "GUID:da09a366aacb5784eba252b5fd6114a6"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

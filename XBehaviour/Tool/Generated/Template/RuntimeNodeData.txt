@@ -1,0 +1,12 @@
+using System;
+using System.Collections.Generic;
+using Hotfix;
+
+namespace XBehaviour.Runtime
+{
+    public partial class 节点名称
+    {
+//变量初始化内容
+    }
+
+}

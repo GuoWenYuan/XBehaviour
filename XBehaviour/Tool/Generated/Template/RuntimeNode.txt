@@ -1,0 +1,26 @@
+using Hotfix;
+
+namespace XBehaviour.Runtime
+{
+    /// <summary>
+    /// 节点Name
+    /// </summary>
+    public partial class 节点名称 : 父节点名称
+    {
+        protected override void DoChildStopped(INode child, bool succeeded)
+        {
+            base.DoChildStopped(child, succeeded);
+        }
+       
+               
+        protected override void OnStart()
+        {
+            base.OnStart();
+        }
+       
+        protected override void OnStop(bool succeed, bool complete)
+        {
+            base.OnStop(succeed, complete);
+        }
+    }
+}

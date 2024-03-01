@@ -1,0 +1,20 @@
+#if UNITY_EDITOR
+
+using XBehaviour.Runtime;
+namespace XBehaviour.Editor
+{
+    [CreateNodeMenu("编辑器界面创建层级")]
+    [NodeWidth(400)]
+    public class 节点名称View: 父节点名称
+    {
+        //在这里添加变量
+        
+        protected override void Init()
+        {
+            base.Init();
+            name = "节点显示名称";
+        }
+    }
+}
+
+#endif

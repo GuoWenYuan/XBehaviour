@@ -1,0 +1,69 @@
+using System;
+using System.Collections.Generic;
+using YamlDotNet.RepresentationModel;
+using System.Linq;
+
+namespace XBehaviour.Runtime
+{
+    public class 节点名称Parser : IParser
+    {
+         public object Decoding(YamlNode yamlNode)
+        {
+            节点名称 节点变量 = new 节点名称();
+            Dictionary<string, string> propertyValues = new();
+            Dictionary<string, YamlMappingNode> mappingValues = new();
+            Dictionary<string, YamlSequenceNode> sequenceValues = new();
+            foreach (var entry in (YamlMappingNode)yamlNode)
+            {
+                switch (entry.Value.NodeType)
+                {
+                    case YamlNodeType.Mapping:
+                        mappingValues.Add(entry.Key.GetScalarValue(),(YamlMappingNode)entry.Value);
+                        break;
+                    case YamlNodeType.Scalar:
+                        propertyValues.Add(entry.Key.GetScalarValue(), entry.Value.GetScalarValue());
+                        break;
+                    case YamlNodeType.Sequence:
+                        sequenceValues.Add(entry.Key.GetScalarValue(),(YamlSequenceNode)entry.Value);
+                        break;
+                }
+            }
+            DecodingScalar(节点变量,propertyValues);
+            DecodingSequence(节点变量,sequenceValues);
+            DecodingMapping(节点变量,mappingValues);
+            return 节点变量;
+
+        }
+        
+        private void DecodingScalar(节点名称 节点变量, Dictionary<string, string> propertyValues)
+        {
+//初始化标量数据
+        }
+
+        private void DecodingSequence(节点名称 节点变量,Dictionary<string, YamlSequenceNode> sequenceValues)
+        {
+            foreach (var entry in sequenceValues)
+            {
+                int index = 0;
+                switch (entry.Key)
+                {
+                    case "Children":
+                        foreach (var sequenceNode in entry.Value)
+                        {
+                            var nodeMappingNode = (YamlMappingNode)sequenceNode;
+                            节点变量.AddChild(ParsersCollection.Parser<INode>(nodeMappingNode));
+                        }
+                        break;
+                    //初始化列表数据    
+                    
+                }   
+            }
+        }
+
+        private void DecodingMapping(节点名称 节点变量,Dictionary<string, YamlMappingNode> mappingValues)
+        {
+            //初始化映射数据
+        }
+
+    }
+}
