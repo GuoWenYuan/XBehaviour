@@ -87,7 +87,12 @@ namespace XNodeEditor.Internal {
 				var attribs = nodeEditors[i].GetCustomAttributes(typeof(A), false);
 				if (attribs == null || attribs.Length == 0) continue;
 				A attrib = attribs[0] as A;
-				editorTypes.Add(attrib.GetInspectedType(), nodeEditors[i]);
+				Type inspectedType = attrib.GetInspectedType();
+				if (!editorTypes.ContainsKey(inspectedType))
+				{
+					editorTypes.Add(attrib.GetInspectedType(), nodeEditors[i]);
+				}
+				
 			}
 		}
 

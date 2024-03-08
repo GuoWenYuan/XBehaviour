@@ -31,7 +31,8 @@ namespace XNodeEditor {
         public static void PropertyField(SerializedProperty property, XNode.NodePort port, bool includeChildren = true, params GUILayoutOption[] options) {
             PropertyField(property, null, port, includeChildren, options);
         }
-
+        
+        
         /// <summary> Make a field for a serialized property. Manual node port override. </summary>
         public static void PropertyField(SerializedProperty property, GUIContent label, XNode.NodePort port, bool includeChildren = true, params GUILayoutOption[] options) {
             if (property == null) throw new NullReferenceException();
@@ -39,10 +40,40 @@ namespace XNodeEditor {
             // If property is not a port, display a regular property field
             if (port == null)
             {
-                
-                // 获取当前属性的 InspanceName 特性
+                // 创建一个新的GUIStyle
+                GUIStyle myCustomStyle = new GUIStyle(GUI.skin.box);
+
+                // 创建一个纹理用于背景
+                Texture2D backgroundTexture = new Texture2D(1, 1);
+                backgroundTexture.SetPixel(0, 0, Color.black); // 设置你想要的颜色
+                backgroundTexture.Apply();
+
+                // 将纹理设置为GUIStyle的背景
+                myCustomStyle.normal.background = backgroundTexture;
+                EditorGUILayout.BeginVertical(myCustomStyle);
+                // 获取当前属性的 InspectorName 特性
                 var attribute = property.serializedObject.targetObject.GetType().GetField(property.name).GetCustomAttributes(typeof(InspectorNameAttribute), true).FirstOrDefault() as InspectorNameAttribute;
-                EditorGUILayout.PropertyField(property, attribute != null ? new GUIContent(attribute.displayName) : label, includeChildren, GUILayout.MinWidth(30));
+                //EditorGUILayout.PropertyField(property, attribute != null ? new GUIContent(attribute.displayName) : label, includeChildren, GUILayout.MinWidth(50));
+                var displayContent = attribute != null ? new GUIContent(attribute.displayName) : new GUIContent(property.displayName);
+
+                if (property.isArray)
+                {
+                    EditorGUILayout.PropertyField(property, displayContent , includeChildren, GUILayout.MinWidth(50));
+                }
+                else
+                {
+                    // 创建一个新的GUIStyle实例
+                    GUIStyle labelStyle = new GUIStyle(GUI.skin.label);
+                    // 配置样式以支持文字换行
+                    labelStyle.wordWrap = true;
+                    EditorGUILayout.BeginHorizontal();
+                    // 属性名称，使用FlexibleSpace自适应宽度
+                    EditorGUILayout.LabelField(displayContent, labelStyle, GUILayout.MaxWidth(200)); 
+                    // 属性输入字段，不显示标签
+                    EditorGUILayout.PropertyField(property, GUIContent.none, GUILayout.ExpandWidth(true));
+                    EditorGUILayout.EndHorizontal();
+                }   
+                EditorGUILayout.EndVertical();
             }
             else {
                 Rect rect = new Rect();
@@ -81,6 +112,7 @@ namespace XNodeEditor {
                         } else if (attr is TooltipAttribute) {
                             tooltip = (attr as TooltipAttribute).tooltip;
                         }
+                        
                     }
 
                     if (dynamicPortList) {
@@ -94,7 +126,7 @@ namespace XNodeEditor {
                             // Display a label if port is connected
                             if (port.IsConnected) EditorGUILayout.LabelField(label != null ? label : new GUIContent(property.displayName, tooltip));
                             // Display an editable property field if port is not connected
-                            else EditorGUILayout.PropertyField(property, label, includeChildren, GUILayout.MinWidth(30));
+                            else EditorGUILayout.PropertyField(property, label, includeChildren, GUILayout.MinWidth(100));
                             break;
                         case XNode.Node.ShowBackingValue.Never:
                             // Display a label
@@ -102,7 +134,7 @@ namespace XNodeEditor {
                             break;
                         case XNode.Node.ShowBackingValue.Always:
                             // Display an editable property field
-                            EditorGUILayout.PropertyField(property, label, includeChildren, GUILayout.MinWidth(30));
+                            EditorGUILayout.PropertyField(property, label, includeChildren, GUILayout.MinWidth(100));
                             break;
                     }
 
@@ -152,17 +184,17 @@ namespace XNodeEditor {
                     switch (showBacking) {
                         case XNode.Node.ShowBackingValue.Unconnected:
                             // Display a label if port is connected
-                            if (port.IsConnected) EditorGUILayout.LabelField(label != null ? label : new GUIContent(property.displayName, tooltip), NodeEditorResources.OutputPort, GUILayout.MinWidth(30));
+                            if (port.IsConnected) EditorGUILayout.LabelField(label != null ? label : new GUIContent(property.displayName, tooltip), NodeEditorResources.OutputPort, GUILayout.MinWidth(100));
                             // Display an editable property field if port is not connected
-                            else EditorGUILayout.PropertyField(property, label, includeChildren, GUILayout.MinWidth(30));
+                            else EditorGUILayout.PropertyField(property, label, includeChildren, GUILayout.MinWidth(100));
                             break;
                         case XNode.Node.ShowBackingValue.Never:
                             // Display a label
-                            EditorGUILayout.LabelField(label != null ? label : new GUIContent(property.displayName, tooltip), NodeEditorResources.OutputPort, GUILayout.MinWidth(30));
+                            EditorGUILayout.LabelField(label != null ? label : new GUIContent(property.displayName, tooltip), NodeEditorResources.OutputPort, GUILayout.MinWidth(100));
                             break;
                         case XNode.Node.ShowBackingValue.Always:
                             // Display an editable property field
-                            EditorGUILayout.PropertyField(property, label, includeChildren, GUILayout.MinWidth(30));
+                            EditorGUILayout.PropertyField(property, label, includeChildren, GUILayout.MinWidth(100));
                             break;
                     }
 
@@ -198,7 +230,7 @@ namespace XNodeEditor {
         /// <summary> Make a simple port field. </summary>
         public static void PortField(GUIContent label, XNode.NodePort port, params GUILayoutOption[] options) {
             if (port == null) return;
-            if (options == null) options = new GUILayoutOption[] { GUILayout.MinWidth(30) };
+            if (options == null) options = new GUILayoutOption[] { GUILayout.MinWidth(100) };
             Vector2 position = Vector3.zero;
             GUIContent content = label != null ? label : new GUIContent(ObjectNames.NicifyVariableName(port.fieldName));
 

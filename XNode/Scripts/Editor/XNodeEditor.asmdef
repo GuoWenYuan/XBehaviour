@@ -1,7 +1,9 @@
 ﻿{
     "name": "XNodeEditor",
     "references": [
-        "XNode"
+        "XNode",
+        "UnityEditor.UI",
+        "UnityEngine.UI"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [

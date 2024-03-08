@@ -2,7 +2,9 @@
     "name": "XNode.Groups",
     "rootNamespace": "",
     "references": [
-        "XNode"
+        "XNode",
+        "UnityEditor.UI",
+        "UnityEngine.UI"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
