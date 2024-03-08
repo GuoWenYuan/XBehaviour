@@ -5,6 +5,11 @@ namespace XBehaviour.Runtime
     /// </summary>
     public class Decorator : Composite
     {
+        protected override void OnStart()
+        {
+            RunningIndex = 0;
+        }
+
         protected override void DoChildStopped(INode child, bool succeeded)
         {
             Stop(succeeded);
@@ -12,7 +17,7 @@ namespace XBehaviour.Runtime
 
         protected override void ProcessChildren()
         {
-            Children[0].Start();
+            //Children[0].Start();
         }
     }
 }

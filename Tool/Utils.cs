@@ -9,7 +9,7 @@ namespace XBehaviour.Tool
     {
         public static class TemplatePath
         {
-            private static readonly string RootPath = "Assets/XBehaviour/Tool/Generated/Template/"; //模板路径
+            private static readonly string RootPath = "Assets/Tools/XBehaviour/Tool/Generated/Template/"; //模板路径
             public static readonly string  RuntimeNodeData = RootPath + "RuntimeNodeData.txt"; //运行时节点数据
             public static readonly string RuntimeNode =  RootPath + "RuntimeNode.txt"; //运行时节点
             public static readonly string ParserPath = RootPath + "Parser.txt"; //解析器

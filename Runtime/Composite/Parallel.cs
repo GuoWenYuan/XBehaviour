@@ -83,7 +83,7 @@ namespace XBehaviour.Runtime
             }
         }
 
-        protected override void OnStop(bool succeed, bool complete)
+        protected override void OnStop(bool succeed)
         {
             this.StopChildren();
         }

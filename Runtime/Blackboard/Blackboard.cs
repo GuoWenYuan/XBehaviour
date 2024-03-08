@@ -165,7 +165,11 @@ namespace XBehaviour.Runtime
             return Get<int>(key);
         }
         
-
+        public long GetLong(string key)
+        {
+            return Get<long>(key);
+        }
+        
         public T Get<T>(string key)
         {
             object result = Get(key);

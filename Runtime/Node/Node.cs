@@ -26,24 +26,28 @@ namespace XBehaviour.Runtime
             set { }
         }
 
+        
+
         public List<INode> Children { get; private set; }
 
        
 
         public void Create()
         {
-            
+            OnCreate();
         }
 
         public void Destroy()
         {
+            OnDestroy();
             StartHandler = null;
             StopHandler = null;
         }
 
         public void Start()
         {
-            Assert.IsFalse(CurrentState == State.Active,"node is already active");
+            //Assert.IsFalse(CurrentState == State.Active,"node is already active");
+            //LogWrapper.LogError($"{this.GetType().Name} Start");
             CurrentState = State.Active;
             CurrentResultState = ResultState.Running;
             StartHandler?.Invoke();
@@ -55,18 +59,18 @@ namespace XBehaviour.Runtime
             OnStart();
         }
 
-        public void Stop(bool succeed = false, bool complete = true)
+        public void Stop(bool succeed = false)
         {
             if (CurrentState != State.Active) return;
 #if UNITY_EDITOR
             Root.TotalNumStopCalls++;
-            this.DebugLastStopRequestAt = UnityEngine.Time.time;
+            //this.DebugLastStopRequestAt = UnityEngine.Time.time;
             this.DebugNumStopCalls++;
             DebugLastResult = succeed;
 #endif
             CurrentState = State.Inactive;
             CurrentResultState = succeed ? ResultState.Success : ResultState.Failure;
-            OnStop(succeed, complete);
+            OnStop(succeed);
             StopHandler?.Invoke(CurrentResultState);
             Parent?.ChildStopped(this, succeed);
         }
@@ -75,11 +79,15 @@ namespace XBehaviour.Runtime
         protected virtual void OnDestroy(){ }
 
         protected virtual void OnStart() {}
-        protected virtual void OnStop(bool succeed,bool complete) {}
+        protected virtual void OnStop(bool succeed) {}
 
         public virtual void ChildStopped(INode child, bool succeeded){ }
-      
-        
+        public virtual void ClearEvents()
+        {
+            StartHandler = null;
+            StopHandler = null;
+        }
+
 
         public void AddChild(INode child)
         {

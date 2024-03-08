@@ -10,16 +10,6 @@ using YamlDotNet.Serialization;
 
 namespace XBehaviour.Editor
 {
-    [System.Flags]
-    public enum TestEnum
-    {
-        [InspectorName("测试A")]
-        A = 1 << 0,
-        [InspectorName("BBBBB")]
-        B = 1 << 1,
-        [InspectorName("CCCCCCC")]
-        C = 1 << 2,
-    }
     
    
     public class NodeView : XNode.Node

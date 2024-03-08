@@ -41,7 +41,7 @@ namespace XBehaviour.Runtime
         
         private void DecodingScalar(Task task, Dictionary<string, string> propertyValues)
         {
-            task.value = propertyValues["value"];
+           
             
         }
 
@@ -52,7 +52,7 @@ namespace XBehaviour.Runtime
 
         private void DecodingMapping(Task task,Dictionary<string, YamlMappingNode> mappingValues)
         {
-            task.vector = ParsersCollection.Parser<Vector3>(mappingValues["vector"]);
+          
         }
 
     }

@@ -50,14 +50,16 @@ namespace XBehaviour.Runtime
         }
       
 
-        protected override void OnStop(bool succeed, bool complete)
+        protected override void OnStop(bool succeed)
         {
             Board?.Disable();
+            this.StopChildren();
         }
 
         protected override void OnDestroy()
         {
             Board = null;
+            this.StopChildren(true);
         }
 
         protected override void DoChildStopped(INode child, bool succeeded)

@@ -31,7 +31,31 @@ namespace XBehaviour.Runtime
             return null;
         }
         
-
+        
+        public static T Parser<T>(string configPath)
+		{
+	        Collection();
+			var loadAsset = ResourceManager.Instance.LoadAssetSync<TextAsset>(configPath, ResourceManager.ResourceType.eConfig);
+			if (loadAsset.Status == EOperationStatus.Failed)
+			{
+				return default(T);
+			}
+			var input = loadAsset.GetAssetObject<TextAsset>().text;
+			YamlStream yaml = new YamlStream();
+			yaml.Load(new StringReader(input));
+			YamlMappingNode mapping = (YamlMappingNode)yaml.Documents[0].RootNode;
+			T root = Parser<T>(mapping);
+			//在这里统一赋值Root 与 Creat
+			//遍历树的所有子节点
+			XBehaviourFactory.RecursionTraversal(root, (node) =>
+			{
+				node.Root = root;
+				node.Create();
+			});
+			return root;
+		}
+      
+        
         /// <summary>
         /// 开始转换
         /// </summary>

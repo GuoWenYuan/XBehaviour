@@ -54,7 +54,7 @@ namespace XBehaviour.Runtime
         INode Parent { get; set; }
         INode Root { get; set; }
 
-        Blackboard Board { get; }
+        Blackboard Board { get; set; }
 
         List<INode> Children { get; }
         
@@ -103,8 +103,7 @@ namespace XBehaviour.Runtime
         /// 停止节点运行
         /// </summary>
         /// <param name="succeed">节点运行是否成功</param>
-        /// <param name="complete">节点是否完成(关系到是否调用完成事件)</param>
-        void Stop(bool succeed = false,bool complete = false);
+        void Stop(bool succeed = false);
         
         
         /// <summary>
@@ -128,5 +127,8 @@ namespace XBehaviour.Runtime
         /// <param name="child"></param>
         /// <param name="succeeded"></param>
         void ChildStopped(INode child, bool succeeded);
+        
+        
+        void ClearEvents(); //清除自定义事件
     }
 }
